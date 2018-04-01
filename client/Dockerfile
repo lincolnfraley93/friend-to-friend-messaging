@@ -1,12 +1,12 @@
 FROM node:latest
 
-WORKDIR /friend-to-friend-messaging
+WORKDIR /client
 
 EXPOSE 3000
 
-RUN npm install -g yarn
-
 RUN npm install -g react-scripts
+
+COPY ./package.json ./package-lock.json ./
 
 RUN npm install
 
