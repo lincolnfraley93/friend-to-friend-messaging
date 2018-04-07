@@ -1,21 +1,39 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import io from 'socket.io-client';
+let socket = io('http://localhost:4000');
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+    componentDidMount() {
+        socket.on('connect', data => {
+            console.log("Connected");
+        })
+    }
+
+    state = {
+        inputText: '' 
+    }
+
+    onInputChange = (event) => {
+        console.log('onInputChange');
+        console.log(event.target.value);
+        this.setState({inputText: event.target.value}); 
+    }
+
+    sendMessage = () => {
+        socket.emit('chatMessage', this.state.inputText);
+        console.log("Sending message: " + this.state.inputText); 
+    }
+
+    render() {
+        return (
+            <div>
+                <input type="text" placeholder="Message" onChange={this.onInputChange}/>
+                <button type="button" onClick={this.sendMessage}>Send</button>
+            </div>
+        );
+    }
 }
 
 export default App;
