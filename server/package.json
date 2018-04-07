@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "koa": "^2.5.0",
+    "nodemon": "^1.17.3",
     "socket.io": "^2.1.0"
   },
   "scripts": {
