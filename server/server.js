@@ -1,13 +1,16 @@
 const server = require('http').createServer();
 const io = require('socket.io')(server);
-io.on('connection', client => {
-  console.log('connected')
-  client.on('event', data => {
-    console.log('event')
-    console.log(data)
-  });
-  client.on('disconnect', () => {
-    console.log('disconnected')
+
+let currentId = 0;
+const clients = [];
+
+io.on('connection', socket => {
+  socket.emit('added', currentId++);
+  clients.push(currentId);
+  io.on('chatMessage', ({ clientId, message }) => {
+    console.log('received message')
+    console.log(`client: ${clientId}`)
+    console.log(`message: ${message}`)
   })
 })
 

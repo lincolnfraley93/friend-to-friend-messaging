@@ -6,9 +6,9 @@ let socket = io('http://localhost:4000');
 
 class App extends Component {
     componentDidMount = () => {
-        socket.on('connect', data => {
-            console.log(`Connected. Client ID: ${data}`);
-            this.setState({clientId: data});
+        socket.on('connect', () => {
+          console.log('added')
+          socket.on('added', clientId => this.setState({ clientId }) );
         })
     }
 
