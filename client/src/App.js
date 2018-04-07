@@ -5,14 +5,16 @@ import io from 'socket.io-client';
 let socket = io('http://localhost:4000');
 
 class App extends Component {
-    componentDidMount() {
+    componentDidMount = () => {
         socket.on('connect', data => {
-            console.log("Connected");
+            console.log(`Connected. Client ID: ${data}`);
+            this.setState({clientId: data});
         })
     }
 
     state = {
-        inputText: '' 
+        inputText: '',
+        clientId: null
     }
 
     onInputChange = (event) => {
@@ -22,7 +24,11 @@ class App extends Component {
     }
 
     sendMessage = () => {
-        socket.emit('chatMessage', this.state.inputText);
+        let messageData = {
+            clientId: this.state.clientId,
+            message: this.state.inputText
+        };
+        socket.emit('chatMessage', messageData);
         console.log("Sending message: " + this.state.inputText); 
     }
 
