@@ -1,9 +1,14 @@
-const Koa = require('koa');
-const server = new Koa();
+const server = require('http').createServer();
+const io = require('socket.io')(server);
+io.on('connection', client => {
+  console.log('connected')
+  client.on('event', data => {
+    console.log('event')
+    console.log(data)
+  });
+  client.on('disconnect', () => {
+    console.log('disconnected')
+  })
+})
 
-server.use(async context => {
-    context.body = "Hello from Koa";
-});
-
-server.listen(3000);
-
+server.listen(4000);
