@@ -1,0 +1,11 @@
+{
+  "name": "friend-to-friend-messaging_api",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "koa": "^2.5.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
